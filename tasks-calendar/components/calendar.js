@@ -1,7 +1,11 @@
 const calendar = {
     template: calendarTpl.innerHTML,
+    props: ['date'],
+    components: {
+        calendarSelector,
+    },
     data() {
-        const currentDay = new Date()
+        const currentDay = this.date // до введения свойств props было const currentDay = new Date()
         const month = currentDay.getMonth()
         const year = currentDay.getFullYear()
         const daysInMonth = getDaysOfMonth(month, year)
@@ -12,6 +16,11 @@ const calendar = {
         }
         return {
             days,
+        }
+    },
+    methods: {
+        weekday(i) {
+            return getWeekdayName(i)
         }
     }
 }

@@ -27,12 +27,24 @@ assertEquals(getFirstWeekday(7, 2024), 3)
 assertEquals(getFirstWeekday(8, 2024), 6)
 
 function getWeekdayName(index) {
-    
+    const d = new Date('2024-07-15') // это понедельник
+    d.setDate(d.getDate() + index)
+    return d.toLocaleDateString('ru-Ru', {weekday: 'long'})
+    // возвращает строку с зависящим от языка представлением части даты этой даты в местном часовом поясе
 }
 
 assertEquals(getWeekdayName(0), 'понедельник')
 assertEquals(getWeekdayName(2), 'среда')
 assertEquals(getWeekdayName(6), 'воскресенье')
+
+function getMonthsName(index) {
+    const d = new Date(2024, index, 1)
+    return d.toLocaleDateString('ru-Ru', {month: 'long'})
+}
+
+assertEquals(getMonthsName(0), 'январь')
+assertEquals(getMonthsName(2), 'март')
+assertEquals(getMonthsName(11), 'декабрь')
 
 // function n(str, char) {
 //     return [...str].filter(ch => char === ch).length
