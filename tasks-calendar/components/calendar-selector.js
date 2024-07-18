@@ -11,28 +11,20 @@ const calendarSelector = {
             return getMonthsName(this.date.getMonth())
         },
         nextMonth() {
-            const date = new Date(this.date)
-            date.setMonth(date.getMonth() + 1)
-            this.date = date
+            state.updateCalendarDateMonth(1)
         },
         prevMonth() {
-            const date = new Date(this.date)
-            date.setMonth(date.getMonth() - 1)
-            this.date = date
+            state.updateCalendarDateMonth(-1)
         },
 
         getYear() {
             return this.date.getFullYear()
         },
         nextYear() {
-            const date = new Date(this.date)
-            date.setFullYear(date.getFullYear() + 1)
-            this.date = date
+            state.updateCalendarDateYear(1)
         },
         prevYear() {
-            const date = new Date(this.date)
-            date.setFullYear(date.getFullYear() - 1)
-            this.date = date
+            state.updateCalendarDateYear(-1)
         }
     }
 }
