@@ -1,6 +1,7 @@
 const app = {
     components: {
-        calendar: calendar, // можно оставить просто calendar, т.к. названия совпадают
+        calendar, // можно оставить просто calendar, т.к. названия совпадают (calendar: calendar,)
+        taskForm
     },
     data() {
         return state
