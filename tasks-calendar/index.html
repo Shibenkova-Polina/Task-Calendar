@@ -15,10 +15,10 @@
             width: calc(100% / 7)
         }
 
-        .chevron-btn {
+        .btn-icon {
             border: none; 
             background: none; 
-            color: gray;
+            color: rgb(177, 177, 177);
         }
     </style>
 </head>
@@ -32,32 +32,48 @@
         <div class="uk-flex uk-flex-wrap calendar">
             <div v-for="(_, i) in 7" class="calendar-item uk-text-uppercase">{{weekday(i)}}</div>
             <!-- в v-for...in(число) перебор начинается с 1. Для вывода с 0, пишем (_, i), где _ элемент, а i индекс-->
-            <div v-for="i in days" class="calendar-item">{{i}}</div>
+            <div v-for="day in days" class="calendar-item">
+                <calendar-item :date="day" v-if="day"></calendar-item>
+            </div>
         </div>
     </template>
 
     <template id="calendarSelectorTpl">
         <div class="uk-width-1-2"> <!-- ширина блока 1/2 -->
-            <button class="chevron-btn" class="uk-margin-small-right" @click="prevMonth"> <!-- uk-icon="chevron-left" -->
+            <button class="btn-icon" class="uk-margin-small-right" @click="prevMonth"> <!-- uk-icon="chevron-left" -->
                 <span class="fa fa-chevron-left"></span>
             </button>
             <span class="uk-text-bold uk-text-center uk-text-uppercase uk-width-1-5 uk-inline-block">{{getMonthTitle()}}</span>
-            <button class="chevron-btn" class="uk-margin-small-left" @click="nextMonth">
+            <button class="btn-icon" class="uk-margin-small-left" @click="nextMonth">
                 <span class="fa fa-chevron-right"></span>
             </button> <!-- uk-icon="chevron-right" -->
 
-            <button class="chevron-btn" class="uk-margin-small-right" @click="prevYear"> <!-- uk-icon="chevron-left" -->
+            <button class="btn-icon" class="uk-margin-small-right" @click="prevYear"> <!-- uk-icon="chevron-left" -->
                 <span class="fa fa-chevron-left"></span>
             </button>
             <span class="uk-text-bold uk-text-center uk-text-uppercase uk-width-1-6 uk-inline-block">{{getYear()}}</span>
-            <button class="chevron-btn" class="uk-margin-small-left" @click="nextYear">
+            <button class="btn-icon" class="uk-margin-small-left" @click="nextYear">
                 <span class="fa fa-chevron-right"></span>
             </button> <!-- uk-icon="chevron-right" -->
         </div>
     </template>
 
+    <template id="calendarItemTpl">
+        <div class="uk-card uk-card-small uk-card-hover uk-margin-small-top" :class="itemClasses">
+            <div class="uk-card-header">
+                <div class="uk-card-title">
+                    <button class="btn-icon" class="uk-icon-link">
+                        <span class="fa fa-plus-circle"></span>
+                    </button>
+                    <span class="uk-float-right uk-text-bold">{{date.getDate()}}</span>
+                </div>
+            </div>
+        </div>
+    </template>
+
     <script src="state.js"></script>
     <script src="components/calendar-selector.js"></script>
+    <script src="components/calendar-item.js"></script>
     <script src="components/calendar.js"></script>
     <script src=app.js></script>
 </body>

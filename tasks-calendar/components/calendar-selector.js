@@ -1,11 +1,6 @@
 const calendarSelector = {
     template: calendarSelectorTpl.innerHTML,
     props: ['date'], // свойства только для чтения
-    // data() {
-    //     return {
-    //         date: new Date()
-    //     }
-    // }, не нужен,т.к. есть свойство date в props
     methods: {
         getMonthTitle() {
             return getMonthsName(this.date.getMonth())

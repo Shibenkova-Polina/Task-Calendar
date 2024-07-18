@@ -46,13 +46,22 @@ assertEquals(getMonthsName(0), 'январь')
 assertEquals(getMonthsName(2), 'март')
 assertEquals(getMonthsName(11), 'декабрь')
 
-// function n(str, char) {
-//     return [...str].filter(ch => char === ch).length
-//     // [...str] делает из строки массив символов (). Расширение элементов из массивов и их распространение в новый контекст / структуру
-//     // filter() создает мелкую копию части данного массива, отфильтрованную только до элементов из данного массива, которые проходят тест, реализованный предоставленной функцией
-// }
+function getISODate(date) {
+    const d = new Date(date)
+    d.setMinutes(d.getUTCMilliseconds() - d.getTimezoneOffset())
+    return d.toISOString().split('T')[0]
+    // toISOString() считает по Гринвичу; в дату не передаётся время, поэтому оно 00:00:00.
+    // для toISOString() вычитается 3 часа разницы между Москвой и Гринвичем, поэтому будет разница в 1 день, если её не установить вручную
+}
 
-// assertEquals(n('hello', 'l'), 2)
-// assertEquals(n('foo', 'n'), 0)
-// assertEquals(n('world', 'r'), 1)
-// assertEquals(n('voodoo', 'o'), 4)
+assertEquals(getISODate(new Date(2020, 1, 29)), '2020-02-29')
+assertEquals(getISODate(new Date(2024, 7, 18)), '2024-08-18')
+
+function what(date) {
+    return date.toLocaleTimeString('ru-RU')
+}
+
+assertEquals(what(new Date(2020, 0, 1)), '00:00:00')
+assertEquals(what(new Date(2020, 0, 1, 1)), '01:00:00')
+assertEquals(what(new Date(2020, 0, 1, 1, 33)), '01:33:00')
+assertEquals(what(new Date(2020, 0, 1, 22, 33, 44)), '22:33:44')
