@@ -1,6 +1,6 @@
 const calendar = {
     template: calendarTpl.innerHTML,
-    props: ['date'],
+    props: ['date', 'tasks'],
     components: {
         calendarSelector,
         calendarItem,
@@ -19,6 +19,12 @@ const calendar = {
                     days[i] = new Date(year, month, i + 1 - firstDayIndex)
                 }
                 this.days = days
+            }
+        },
+        tasks: {
+            immediate:true,
+            handler() {
+                console.log('количество задач', this.tasks.length)
             }
         },
     },

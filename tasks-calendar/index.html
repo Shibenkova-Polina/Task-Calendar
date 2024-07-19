@@ -24,7 +24,7 @@
 </head>
 <body>
     <div id="app" class="uk-container uk-container-large">
-        <calendar :date="calendarDate"></calendar>
+        <calendar :date="calendarDate" :tasks="tasks"></calendar>
         <task-form :new-task="newTask"></task-form>
     </div>
 
@@ -73,7 +73,7 @@
     </template>
 
     <template id="taskFormTpl">
-        <form id="task-form" uk-modal ref="form">
+        <form id="task-form" uk-modal ref="form" @submit.prevent="save">  <!-- submit - отправка данных на сервер (сохранение данных формы). prevent - свойство для отмены перезагрузки страницы. save - название метода -->
             <div class="uk-modal-dialog" uk-overflow-auto>
                 <div class="uk-modal-header">
                     <h2 class="uk-modal-title">Добавить задачу</h2>
