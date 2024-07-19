@@ -7,4 +7,6 @@ const app = {
         return state
     }
 }
-Vue.createApp(app).mount('#app')
+const vueApp = Vue.createApp(app)
+vueApp.config.globalProperties.$state = state // значение $state теперь доступно на уровне всех шаблонов приложения
+vueApp.mount('#app')
