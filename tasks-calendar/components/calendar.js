@@ -24,13 +24,29 @@ const calendar = {
         tasks: {
             immediate:true,
             handler() {
-                console.log('количество задач', this.tasks.length)
+                const taskIndex = {}
+                for (let i = 0; i < this.tasks.length; i++) {
+                    const task = this.tasks[i]
+                    const key = this.getIndexKey(task.date)
+                    const tasksForDay = taskIndex[key] || []
+                    tasksForDay.push(task)
+                    tasksForDay.sort(this.sortTasks)
+                    taskIndex[key] = tasksForDay
+                }
+
+                this.taskIndex = taskIndex
             }
         },
     },
     methods: {
         weekday(i) {
             return getWeekdayName(i)
+        },
+        sortTasks(a, b) {
+            return a.date.getTime() - b.date.getTime()
+        },
+        getIndexKey(date) {
+            return date.toLocaleDateString()
         }
     }
 }

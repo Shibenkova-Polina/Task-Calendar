@@ -20,6 +20,12 @@
             background: none; 
             color: rgb(177, 177, 177);
         }
+
+        .show-all-tasks {
+            position: absolute;
+            top: 38px;
+            left: 20px;
+        }
     </style>
 </head>
 <body>
@@ -34,7 +40,7 @@
             <div v-for="(_, i) in 7" class="calendar-item uk-text-uppercase">{{weekday(i)}}</div>
             <!-- в v-for...in(число) перебор начинается с 1. Для вывода с 0, пишем (_, i), где _ элемент, а i индекс-->
             <div v-for="day in days" class="calendar-item">
-                <calendar-item :date="day" v-if="day"></calendar-item>
+                <calendar-item :date="day" v-if="day" :tasks="taskIndex[getIndexKey(day)]"></calendar-item>
             </div>
         </div>
     </template>
@@ -68,6 +74,18 @@
                     </button>
                     <span class="uk-float-right uk-text-bold">{{date.getDate()}}</span>
                 </div>
+            </div>
+            <div class="uk-card-body" v-if="tasks?.length">
+                <ul class="uk-list">
+                    <li v-for="task in limitTasks()">
+                        <div class="uk-text-truncate"> <!-- обрезает длинные названия, заменяя их ... -->
+                            <a :title="task.title">{{task.title}}</a>
+                        </div>
+                    </li>
+                    <li class="show-all-tasks" v-if="tasks.length > maxTasks"> <!-- элемент с общим количеством задач -->
+                        <a class="uk-badge">{{tasks.length}}</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </template>
