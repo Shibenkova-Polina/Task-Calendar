@@ -8,10 +8,32 @@ class Task {
     }
 }
 
+function saveTasksToStore(tasks) {
+    const tasksString = JSON.stringify(tasks)
+    localStorage.setItem('tasks', tasksString) // ключ и значение в переменной браузера
+}
+
+function loadTasksFromStore() {
+    let tasks = []
+    try {
+        tasks = JSON.parse(localStorage.getItem('tasks')) || []
+    }
+    catch(e) {
+        console.error(e)
+    }
+
+    for (let i = 0; i < tasks.length; i++) {
+        const task = tasks[i]
+        task.date = new Date(task.date)
+    }
+
+    return tasks
+}
+
 const state = Vue.reactive({
     calendarDate: new Date(),
     newTask: null,
-    tasks: [],
+    tasks: loadTasksFromStore(),
     updateCalendarDateMonth(diff) {
         const date = new Date(this.calendarDate)
         date.setMonth(date.getMonth() + diff)
@@ -33,5 +55,10 @@ const state = Vue.reactive({
         task.finished = formModel.finished
 
         this.tasks = this.tasks.concat([task]) // скопировать массив с добавлением элемента
+        saveTasksToStore(this.tasks)
+        localStorage.setItem('last-task-date', JSON.stringify(task.date))
     }
 })
+
+const lastTaskDate = localStorage.getItem('last-task-date')
+if (lastTaskDate) console.log(lastTaskDate)
