@@ -34,6 +34,7 @@ const state = Vue.reactive({
     calendarDate: new Date(),
     newTask: null,
     editTask: null,
+    showTasks: [],
     tasks: loadTasksFromStore(),
     updateCalendarDateMonth(diff) {
         const date = new Date(this.calendarDate)

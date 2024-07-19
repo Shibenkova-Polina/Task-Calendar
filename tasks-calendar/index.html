@@ -36,6 +36,7 @@
     <div id="app" class="uk-container uk-container-large">
         <calendar :date="calendarDate" :tasks="tasks"></calendar>
         <task-form :new-task="newTask" :edit-task="editTask"></task-form>
+        <tasks-list :tasks="showTasks"></tasks-list>
     </div>
 
     <template id="calendarTpl"> <!-- хранение шаблона HTML -->
@@ -50,7 +51,10 @@
     </template>
 
     <template id="calendarSelectorTpl">
-        <div class="uk-width-1-2"> <!-- ширина блока 1/2 -->
+        <div class="uk-width-1-2 uk-margine-small-top"> <!-- ширина блока 1/2 -->
+            <a class="uk-icon-button uk-margine-small-right" @click.prevented="$state.showTasks = [...$state.tasks]">
+                <span class="fa fa-list"></span>
+            </a>
             <button class="btn-icon" class="uk-margin-small-right" @click="prevMonth"> <!-- uk-icon="chevron-left" -->
                 <span class="fa fa-chevron-left"></span>
             </button>
@@ -87,7 +91,7 @@
                         </div>
                     </li>
                     <li class="show-all-tasks" v-if="tasks.length > maxTasks"> <!-- элемент с общим количеством задач -->
-                        <a class="uk-badge">{{tasks.length}}</a>
+                        <a class="uk-badge" @click.prevent="showTasks">{{tasks.length}}</a>
                     </li>
                 </ul>
             </div>
@@ -151,7 +155,21 @@
         </form>
     </template>
 
+    <template id="tasksListTpl">
+        <div id="tasks-list" uk-modal>
+            <div class="uk-modal-dialog uk-modal-body" uk-overflow-auto>
+                <h2 class="uk-modal-title">Список задач</h2>
+                <ul class="uk-list uk-list-divider">
+                    <li v-for="task in tasks">
+                        <a @click.prevent="$state.setEditTask(task)">{{task.title}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </template>
+
     <script src="state.js"></script>
+    <script src="components/tasks-list.js"></script>
     <script src="components/calendar-selector.js"></script>
     <script src="components/calendar-item.js"></script>
     <script src="components/calendar.js"></script>

@@ -30,6 +30,9 @@ const calendarItem = {
             if (task.finished) {
                 return this.taskFinishedTitle
             }
+        },
+        showTasks() {
+            state.showTasks = this.tasks.concat([])
         }
     }
 }
